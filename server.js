@@ -1,25 +1,15 @@
-const express = require("express");
-const morgan = require("morgan");
-const mongoose = require("mongoose");
+// need to include express, mongoose, morgan
 
-const app = express();
+const express = require('express')
+var morgan = require('morgan')
+const mongoose = require('mongoose');
+
+const app = express()
+// telling web server what port to listen to
+// listen to whatever is in the environment variable OR 8080 if nothing in env variable
+//process.env global variable is injected by Node at runtime for your application to use, it represents the state of the system environment your application is in when it starts
 const PORT = process.env.PORT || 8080;
 
-app.use(morgan("dev"));
 
-app.use(express.urlencoded({extended:true}));
-app.use(express.json());
-app.use(express.static('public'));
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/workout";
-mongoose.connect(MONGODB_URI,{  
-    useNewUrlParser:true,
-    useFindAndModify:false
-})
-
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
-
-app.listen(PORT,function(){ 
-    console.log(`App listening on Port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`))
