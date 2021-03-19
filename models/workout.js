@@ -1,9 +1,7 @@
-//requiring mongoose
 const mongoose = require("mongoose")
-// accessing Schema constructor? from Mongoose
 const Schema = mongoose.Schema
 
-const workoutShema = new Schema({
+const workoutSchema = new Schema({
     day: {
         type: Date,
         default: Date.now()
@@ -41,15 +39,13 @@ const workoutShema = new Schema({
         toJSON: {
             virtuals: true
         }
-    }
-)
-
+    })
 // Adds the duration time from each workout 
-workoutShema.virtual("totalDuration").get(function() {
+workoutSchema.virtual("totalDuration").get(function() {
     return this.exercises.reduce((total, exercise) => {
         return total + exercise.duration;
       }, 0);
-    });
+});
 
 const Workout = mongoose.model("Workout", workoutSchema)
 module.exports = Workout
